@@ -1,0 +1,126 @@
+package com.chinazhoufan.admin.modules.express.service;
+
+
+import com.chinazhoufan.admin.common.utils.HttpTool;
+import com.chinazhoufan.admin.modules.express.config.YTConfig;
+import com.chinazhoufan.api.common.express.ExpressUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URLEncoder;
+
+/**
+ * 圆通Service
+ * @author liuxiaodong
+ * @date 2017-11-13
+ */
+public class YTService {
+
+    private static final Logger logger = LoggerFactory.getLogger(YTService.class);
+
+    public static void main(String[] args){
+
+        String logistics_interface = "<RequestOrder>\n" +
+                "\n" +
+                "<clientID>K21000119</clientID>\n" +
+                "\n" +
+                "<logisticProviderID>YTO</logisticProviderID>\n" +
+                "\n" +
+                "<customerId>K21000119</customerId>\n" +
+                "\n" +
+                "<txLogisticID>ZF15183117908113</txLogisticID>\n" +
+                "\n" +
+                "<tradeNo>1</tradeNo>\n" +
+                "\n" +
+                "<totalServiceFee>1</totalServiceFee>\n" +
+                "\n" +
+                "<codSplitFee>1</codSplitFee>\n" +
+                "\n" +
+                "<orderType>1</orderType>\n" +
+                "\n" +
+                "<serviceType>1</serviceType>\n" +
+                "\n" +
+                "<flag>1</flag>\n" +
+                "\n" +
+                "<sender>\n" +
+                "\n" +
+                "        <name>周范</name>\n" +
+                "\n" +
+                "        <postCode>526238</postCode>\n" +
+                "\n" +
+                "        <phone>021-12345678</phone>\n" +
+                "\n" +
+                "        <mobile>18112345678</mobile>\n" +
+                "\n" +
+                "        <prov>浙江</prov>\n" +
+                "\n" +
+                "        <city>杭州市,拱墅区</city>\n" +
+                "\n" +
+                "        <address>小河路480号</address>\n" +
+                "\n" +
+                "</sender>\n" +
+                "\n" +
+                "<receiver>\n" +
+                "\n" +
+                "          <name>周范</name>\n" +
+                "\n" +
+                "          <postCode>0</postCode>\n" +
+                "\n" +
+                "          <phone>0</phone>\n" +
+                "\n" +
+                "          <mobile>18089666766</mobile>\n" +
+                "\n" +
+                "          <prov>浙江</prov>\n" +
+                "\n" +
+                "          <city>杭州市,拱墅区区</city>\n" +
+                "\n" +
+                "           <address>金华路28号</address>\n" +
+                "\n" +
+                "</receiver>\n" +
+                "\n" +
+                "<sendStartTime>2017-12-12 12:12:12</sendStartTime>\n" +
+                "\n" +
+                "<sendEndTime>2017-12-12 12:12:12</sendEndTime>\n" +
+                "\n" +
+                "<goodsValue>1</goodsValue>\n" +
+                "\n" +
+                "<items>\n" +
+                "\n" +
+                "      <item>\n" +
+                "\n" +
+                "           <itemName>商品</itemName>\n" +
+                "\n" +
+                "           <number>2</number>\n" +
+                "\n" +
+                "           <itemValue>0</itemValue>\n" +
+                "\n" +
+                "     </item>\n" +
+                "\n" +
+                "</items>\n" +
+                "\n" +
+                "<insuranceValue>1</insuranceValue>\n" +
+                "\n" +
+                "<special>1</special>\n" +
+                "\n" +
+                "<remark>1</remark>\n" +
+                "\n" +
+                "</RequestOrder>";
+
+        try {
+            String data_digest = ExpressUtil.generateData(logistics_interface, YTConfig.PARTNER_ID);
+
+            logger.info(logistics_interface);
+
+            logger.info(HttpTool.post(YTConfig.ORDER_URL, "logistics_interface="+ URLEncoder.encode(logistics_interface,"UTF-8")+
+                                                            "&data_digest="+URLEncoder.encode(data_digest, "UTF-8")+
+                                                            "&type="+YTConfig.TYPE+
+                                                            "&clientId="+YTConfig.CLIENT_ID
+                                                            ));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+}
